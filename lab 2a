@@ -1,3 +1,5 @@
+1. Write an assembly language program to perform addition of 8-bit data.
+
 num1 db 18h
 num2 db 18h
 start:
