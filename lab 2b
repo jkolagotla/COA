@@ -1,3 +1,5 @@
+2. Write a program in assembly language to perform addition of 16-bit data.
+
 org 100h
 num1 dw 1234h  ; First 16-bit number
 num2 dw 5678h  ; Second 16-bit number
