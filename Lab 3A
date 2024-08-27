@@ -1,5 +1,5 @@
 Write a program in assembly language to perform subtraction of 8-bit data.
-Code:
+
 org 100h
 num1 db 24h
 num2 db 15h 
