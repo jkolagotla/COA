@@ -1,0 +1,38 @@
+1. Write an assembly language program to perform multiplication of 8-bit data.
+ code:-
+
+org 100h
+num1 db 10h ; First 8-bit number
+num2 db 5h ; Second 8-bit number
+start:
+mov al, num1 ; Move num1 to AL
+mov bl, num2 ; Move num2 to BL
+mul bl ; Multiply AL by BL (result in AX)
+; The result is stored in AX (AH:AL), we need to print it in hex
+mov bl, al ; Store the lower 8 bits of the result in BL
+mov ah, al ; Copy AL to AH to prepare for digit extraction
+; Extract the high nibble (upper 4 bits) and convert to ASCII
+and ah, 0F0h ; Mask out the lower nibble (keep the upper 4 bits)
+shr ah, 4 ; Shift the upper nibble to the lower position
+add ah, 30h ; Convert to ASCII (0-9)
+cmp ah, 39h ; Check if it's a letter (A-F)
+jle print_first_digit
+add ah, 7 ; Adjust for A-F
+print_first_digit:
+mov dl, ah ; Move the digit to DL
+mov ah, 02h ; Prepare for printing
+int 21h ; Print the high nibble (first hex digit)
+; Now extract the low nibble and convert to ASCII
+mov ah, bl ; Move BL (lower 8 bits) back to AH
+and ah, 0Fh ; Mask out the upper nibble (keep the lower 4 bits)
+add ah, 30h ; Convert to ASCII (0-9)
+cmp ah, 39h ; Check if it's a letter (A-F)
+jle print_second_digit
+add ah, 7 ; Adjust for A-F
+print_second_digit:
+mov dl, ah ; Move the digit to DL
+mov ah, 02h ; Prepare for printing
+int 21h ; Print the low nibble (second hex digit)
+; Exit the program
+mov ah, 4Ch
+int 21h
