@@ -1,0 +1,39 @@
+1.Write a program in assembly language to display a two-digit number on the screen. The
+two-digits number is required to be taken in the program itself.
+
+CODE:-
+
+
+; Display message: "Enter two digits: "
+MOV AH, 09h            ; Function 09h is used to display a string
+MOV DX, OFFSET msg     ; Load the address of the message into DX
+INT 21h                ; DOS interrupt to display the message
+; Read first digit from the user
+MOV AH, 01h            ; Function 01h is used to read a character from input
+INT 21h                ; DOS interrupt to get the character
+SUB AL, 30h            ; Convert ASCII to numerical value
+MOV BL, AL             ; Store the first digit in BL
+; Read second digit from the user
+MOV AH, 01h            ; Function 01h is used to read another character
+INT 21h                ; DOS interrupt to get the second digit
+SUB AL, 30h            ; Convert ASCII to numerical value
+MOV BH, AL             ; Store the second digit in BH
+; Display message: "The entered number is: "
+MOV AH, 09h            ; Function 09h is used to display a string
+MOV DX, OFFSET msg_out ; Load the address of the output message into DX
+INT 21h                ; DOS interrupt to display the message
+; Print the first digit
+ADD BL, 30h            ; Convert the numerical value back to ASCII
+MOV DL, BL             ; Load the first digit into DL
+MOV AH, 02h            ; Function 02h is used to print a character
+INT 21h                ; DOS interrupt to print the character
+; Print the second digit
+ADD BH, 30h            ; Convert the numerical value back to ASCII
+MOV DL, BH             ; Load the second digit into DL
+MOV AH, 02h            ; Function 02h is used to print a character
+INT 21h                ; DOS interrupt to print the character
+MOV AH, 4Ch            ; Function 4Ch is used to terminate the program
+INT 21h                ; DOS interrupt to exit
+msg DB 'Enter two digits: $'        ; Input prompt message
+msg_out DB 0Dh, 0Ah, 'The entered number is: $' ; Output message with newline
+END                    ; End of program
